@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Table(name: 'users')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
 {
@@ -13,7 +16,7 @@ class User
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 40, unique: true)]
+    #[ORM\Column(length: 60, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 20)]
@@ -30,6 +33,26 @@ class User
 
     #[ORM\Column]
     private ?int $active = null;
+
+    #[ORM\ManyToMany(targetEntity: role::class)]
+    private Collection $roles;
+
+    #[ORM\OneToMany(mappedBy: 'authorId', targetEntity: Test::class)]
+    private Collection $authoredTests;
+
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: QuestionCategory::class)]
+    private Collection $authoredQuestionCategories;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserTest::class, orphanRemoval: true)]
+    private Collection $userTests;
+
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+        $this->authoredTests = new ArrayCollection();
+        $this->authoredQuestionCategories = new ArrayCollection();
+        $this->userTests = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +127,120 @@ class User
     public function setActive(int $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, role>
+     */
+    public function getRoles(): Collection
+    {
+        return $this->roles;
+    }
+
+    public function addRole(role $role): self
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+        }
+
+        return $this;
+    }
+
+    public function removeRole(role $role): self
+    {
+        $this->roles->removeElement($role);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Test>
+     */
+    public function getAuthoredTests(): Collection
+    {
+        return $this->authoredTests;
+    }
+
+    public function addAuthoredTest(Test $authoredTest): self
+    {
+        if (!$this->authoredTests->contains($authoredTest)) {
+            $this->authoredTests->add($authoredTest);
+            $authoredTest->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuthoredTest(Test $authoredTest): self
+    {
+        if ($this->authoredTests->removeElement($authoredTest)) {
+            // set the owning side to null (unless already changed)
+            if ($authoredTest->getAuthor() === $this) {
+                $authoredTest->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, QuestionCategory>
+     */
+    public function getAuthoredQuestionCategories(): Collection
+    {
+        return $this->authoredQuestionCategories;
+    }
+
+    public function addAuthoredQuestionCategory(QuestionCategory $authoredQuestionCategory): self
+    {
+        if (!$this->authoredQuestionCategories->contains($authoredQuestionCategory)) {
+            $this->authoredQuestionCategories->add($authoredQuestionCategory);
+            $authoredQuestionCategory->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuthoredQuestionCategory(QuestionCategory $authoredQuestionCategory): self
+    {
+        if ($this->authoredQuestionCategories->removeElement($authoredQuestionCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($authoredQuestionCategory->getAuthor() === $this) {
+                $authoredQuestionCategory->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserTest>
+     */
+    public function getUserTests(): Collection
+    {
+        return $this->userTests;
+    }
+
+    public function addUserTest(UserTest $userTest): self
+    {
+        if (!$this->userTests->contains($userTest)) {
+            $this->userTests->add($userTest);
+            $userTest->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserTest(UserTest $userTest): self
+    {
+        if ($this->userTests->removeElement($userTest)) {
+            // set the owning side to null (unless already changed)
+            if ($userTest->getUser() === $this) {
+                $userTest->setUser(null);
+            }
+        }
 
         return $this;
     }
