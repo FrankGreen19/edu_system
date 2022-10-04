@@ -30,6 +30,9 @@ class UserTest
     #[ORM\OneToMany(mappedBy: 'userTest', targetEntity: UserQuestionAnswers::class, orphanRemoval: true)]
     private Collection $userQuestionAnswers;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $startedAt = null;
+
     public function __construct()
     {
         $this->userQuestionAnswers = new ArrayCollection();
@@ -102,6 +105,18 @@ class UserTest
                 $userQuestionAnswer->setUserTest(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStartedAt(): ?\DateTimeImmutable
+    {
+        return $this->startedAt;
+    }
+
+    public function setStartedAt(\DateTimeImmutable $startedAt): self
+    {
+        $this->startedAt = $startedAt;
 
         return $this;
     }
