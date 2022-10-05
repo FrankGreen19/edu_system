@@ -40,7 +40,7 @@ class Test
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?testtype $testType = null;
+    private ?TestType $testType = null;
 
     #[ORM\OneToMany(mappedBy: 'test', targetEntity: OrderedTestQuestion::class, orphanRemoval: true)]
     private Collection $orderedTestQuestions;
@@ -146,12 +146,12 @@ class Test
         return $this;
     }
 
-    public function getTestType(): ?testtype
+    public function getTestType(): ?TestType
     {
         return $this->testType;
     }
 
-    public function setTestType(?testtype $testType): self
+    public function setTestType(?TestType $testType): self
     {
         $this->testType = $testType;
 

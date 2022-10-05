@@ -6,10 +6,12 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Table(name: 'users')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -34,7 +36,7 @@ class User
     #[ORM\Column]
     private ?int $active = null;
 
-    #[ORM\ManyToMany(targetEntity: role::class)]
+    #[ORM\ManyToMany(targetEntity: Role::class)]
     private Collection $roles;
 
     #[ORM\OneToMany(mappedBy: 'authorId', targetEntity: Test::class)]
@@ -132,14 +134,19 @@ class User
     }
 
     /**
-     * @return Collection<int, role>
+     * @return array
      */
-    public function getRoles(): Collection
+    public function getRoles(): array
     {
-        return $this->roles;
+        $roles = [];
+        foreach ($this->roles->toArray() as $role) {
+            $roles[] = $role->getTitle();
+        }
+
+        return $roles;
     }
 
-    public function addRole(role $role): self
+    public function addRole(Role $role): self
     {
         if (!$this->roles->contains($role)) {
             $this->roles->add($role);
@@ -148,7 +155,7 @@ class User
         return $this;
     }
 
-    public function removeRole(role $role): self
+    public function removeRole(Role $role): self
     {
         $this->roles->removeElement($role);
 
@@ -243,5 +250,16 @@ class User
         }
 
         return $this;
+    }
+
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getEmail();
     }
 }
