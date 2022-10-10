@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Table(name: 'users')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\HasLifecycleCallbacks()]
 class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -50,6 +51,9 @@ class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUs
 
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
     private Collection $relatedGroups;
+
+    public const ACTIVE_NO  = 0;
+    public const ACTIVE_YES = 1;
 
     public function __construct()
     {
@@ -118,11 +122,9 @@ class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUs
         return $this->full_name;
     }
 
-    public function setFullName(string $full_name): self
-    {
-        $this->full_name = $full_name;
-
-        return $this;
+    #[ORM\PrePersist]
+    public function constructFullName() {
+        $this->full_name = $this->last_name.' '.$this->first_name;
     }
 
     public function getActive(): ?int
@@ -137,9 +139,6 @@ class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUs
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getRoles(): array
     {
         $roles = [];
@@ -166,9 +165,6 @@ class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUs
         return $this;
     }
 
-    /**
-     * @return Collection<int, Test>
-     */
     public function getAuthoredTests(): Collection
     {
         return $this->authoredTests;
@@ -196,9 +192,6 @@ class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUs
         return $this;
     }
 
-    /**
-     * @return Collection<int, QuestionCategory>
-     */
     public function getAuthoredQuestionCategories(): Collection
     {
         return $this->authoredQuestionCategories;
@@ -226,9 +219,6 @@ class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUs
         return $this;
     }
 
-    /**
-     * @return Collection<int, UserTest>
-     */
     public function getUserTests(): Collection
     {
         return $this->userTests;

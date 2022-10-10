@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="19172e3c-e80f-4894-99a3-7fd601cfc0dd" name="Default Changelist" comment="JWT настройка">
-      <change beforePath="$PROJECT_DIR$/.idea/edu_system.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/edu_system.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+    <list default="true" id="19172e3c-e80f-4894-99a3-7fd601cfc0dd" name="Default Changelist" comment="Добавлены фикстуры и фейкер">
       <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,6 +96,9 @@
       <path value="$PROJECT_DIR$/vendor/lexik/jwt-authentication-bundle" />
       <path value="$PROJECT_DIR$/vendor/namshi/jose" />
       <path value="$PROJECT_DIR$/vendor/symfony/serializer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/vendor/fakerphp/faker" />
     </include_path>
   </component>
   <component name="ProjectId" id="2F5odsvrRn526hCiom2pHtssPLg" />
@@ -139,7 +136,7 @@
       <workItem from="1664480058513" duration="1653000" />
       <workItem from="1664714317010" duration="3489000" />
       <workItem from="1664822470485" duration="33744000" />
-      <workItem from="1665431519918" duration="845000" />
+      <workItem from="1665431519918" duration="4149000" />
     </task>
     <task id="LOCAL-00001" summary="init commit">
       <created>1664481072520</created>
@@ -211,7 +208,49 @@
       <option name="project" value="LOCAL" />
       <updated>1664997959871</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Базовая сущность">
+      <created>1665432479148</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1665432479148</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Базовые контроллер и модуль">
+      <created>1665432521231</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1665432521231</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Сущность группы">
+      <created>1665432553899</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1665432553899</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Бандл serializer">
+      <created>1665432618022</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1665432618022</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Миграция для группы">
+      <created>1665432844985</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1665432844985</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Добавлены фикстуры и фейкер">
+      <created>1665435691644</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1665435691644</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,6 +276,12 @@
     <MESSAGE value="Поле начало прохождения теста" />
     <MESSAGE value="JWT bundle" />
     <MESSAGE value="JWT настройка" />
-    <option name="LAST_COMMIT_MESSAGE" value="JWT настройка" />
+    <MESSAGE value="Базовая сущность" />
+    <MESSAGE value="Базовые контроллер и модуль" />
+    <MESSAGE value="Сущность группы" />
+    <MESSAGE value="Бандл serializer" />
+    <MESSAGE value="Миграция для группы" />
+    <MESSAGE value="Добавлены фикстуры и фейкер" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлены фикстуры и фейкер" />
   </component>
 </project>
