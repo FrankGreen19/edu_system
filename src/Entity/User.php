@@ -48,12 +48,16 @@ class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUs
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserTest::class, orphanRemoval: true)]
     private Collection $userTests;
 
+    #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
+    private Collection $relatedGroups;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
         $this->authoredTests = new ArrayCollection();
         $this->authoredQuestionCategories = new ArrayCollection();
         $this->userTests = new ArrayCollection();
+        $this->relatedGroups = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -261,5 +265,26 @@ class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUs
     public function getUserIdentifier(): string
     {
         return $this->getEmail();
+    }
+
+    public function getRelatedGroups(): Collection
+    {
+        return $this->relatedGroups;
+    }
+
+    public function addRelatedGroup(Group $relatedGroup): self
+    {
+        if (!$this->relatedGroups->contains($relatedGroup)) {
+            $this->relatedGroups->add($relatedGroup);
+        }
+
+        return $this;
+    }
+
+    public function removeRelatedGroup(Group $relatedGroup): self
+    {
+        $this->relatedGroups->removeElement($relatedGroup);
+
+        return $this;
     }
 }
