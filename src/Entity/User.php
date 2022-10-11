@@ -22,7 +22,7 @@ class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUs
     #[ORM\Column(length: 60, unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(length: 60)]
     private ?string $password = null;
 
     #[ORM\Column(length: 20)]
