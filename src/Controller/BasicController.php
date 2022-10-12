@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class BasicController extends AbstractController
+abstract class BasicController extends AbstractController
 {
     protected ValidatorInterface $validator;
     protected SerializerInterface $serializer;
