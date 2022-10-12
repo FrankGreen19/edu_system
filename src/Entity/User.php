@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Resource\ResourceInterface;
+use App\Resource\UserResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: 'users')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
-class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUserInterface
+class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUserInterface, EntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -276,5 +278,18 @@ class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUs
         $this->relatedGroups->removeElement($relatedGroup);
 
         return $this;
+    }
+
+    public function toResource(): ResourceInterface
+    {
+        return new UserResource(
+           $this->id,
+           $this->email,
+           $this->first_name,
+           $this->last_name,
+           $this->full_name,
+           $this->active,
+           $this->getRoles()
+        );
     }
 }
