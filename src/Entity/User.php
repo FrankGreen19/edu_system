@@ -42,7 +42,7 @@ class User extends BasicEntity implements UserInterface, PasswordAuthenticatedUs
     #[ORM\ManyToMany(targetEntity: Role::class)]
     private Collection $roles;
 
-    #[ORM\OneToMany(mappedBy: 'authorId', targetEntity: Test::class)]
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Test::class)]
     private Collection $authoredTests;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: QuestionCategory::class)]

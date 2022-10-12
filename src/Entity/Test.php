@@ -24,7 +24,7 @@ class Test
     private ?string $title = null;
 
     #[ORM\ManyToOne(inversedBy: 'authoredTests')]
-    private ?user $author = null;
+    private ?User $author = null;
 
     #[ORM\Column]
     private ?int $questionsNumber = null;
