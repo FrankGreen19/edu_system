@@ -14,7 +14,7 @@ class OrderedTestQuestion
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orderedTestQuestions')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'orderedTestQuestions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?test $test = null;
 
