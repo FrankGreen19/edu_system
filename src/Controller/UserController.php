@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Format\ResponseFormat\UserResponseFormat\OneUserResponseFormat;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +14,7 @@ class UserController extends AuthenticatedController
     public function getOne(): JsonResponse
     {
         return $this->json([
-            'user' => $this->getUser()->toResource(),
+            'user' => new OneUserResponseFormat($this->getUser()->toResource()),
         ]);
     }
 }
