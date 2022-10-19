@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\Exception\ExceptionFormat;
+use Throwable;
 
 class ExceptionMappingResolverService
 {
@@ -17,12 +18,18 @@ class ExceptionMappingResolverService
         }
     }
 
-    public function resolve(string $throwableClass): ?ExceptionFormat
+    public function resolve(Throwable $throwableClass): ?ExceptionFormat
     {
         $foundMapping = null;
 
+        /** @var ExceptionFormat $mapping */
         foreach ($this->mappings as $class => $mapping) {
-            if ($throwableClass === $class || is_subclass_of($throwableClass, $class)) {
+            $throwableClassName = get_class($throwableClass);
+
+            if ($throwableClassName === $class
+                || is_subclass_of($throwableClassName, $class)
+                || $mapping->getCode() === $throwableClass->getCode())
+            {
                 $foundMapping = $mapping;
                 break;
             }
