@@ -5,7 +5,7 @@ namespace App\Listener;
 
 
 use App\Exception\ExceptionFormat;
-use App\Format\ErrorResponseFormat;
+use App\Format\ResponseFormat\ErrorResponseFormat;
 use App\Service\ExceptionMappingResolverService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
