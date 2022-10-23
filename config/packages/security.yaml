@@ -12,27 +12,30 @@ security:
                 property: email
     firewalls:
         login:
-            pattern: ^/api/login_check|token_refresh
+            pattern: ^/api/token/(get|refresh)
             stateless: true
             entry_point: jwt
             json_login:
                 username_path: email
-                check_path: /api/login_check
+                check_path: /api/token/get
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
             jwt: ~
             refresh_jwt:
-                check_path: api_refresh_token
+                check_path: /api/token/refresh
 
         api:
             pattern: ^/api
             stateless: true
             jwt: ~
+            logout:
+                path: /api/token/invalidate
+
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: /api/login_check|token_refresh, roles: PUBLIC_ACCESS }
+        - { path: /api/token/(get|refresh), roles: PUBLIC_ACCESS }
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
