@@ -9,7 +9,7 @@ kernel:
 api_token_get:
     path: /api/token/get
 
-api_token_refresh:
+api_refresh_token:
     path: /api/token/refresh
 
 api_token_invalidate:

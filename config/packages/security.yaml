@@ -11,32 +11,26 @@ security:
                 class: App\Entity\User
                 property: email
     firewalls:
-        login:
-            pattern: ^/api/token/(get|refresh)
-            stateless: true
-            entry_point: jwt
-            json_login:
-                username_path: email
-                check_path: /api/token/get
-                success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
-            jwt: ~
-            refresh_jwt:
-                check_path: /api/token/refresh
-
         api:
             pattern: ^/api
-            stateless: true
-            jwt: ~
+            stateless: true # идентификатор того, что сессии нет
+            entry_point: jwt # использовать аутентификатор jwt
+            json_login: # метод аутентификации для токенов
+                username_path: email
+                check_path: api_token_get
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            jwt: ~ # используется jwt без настроек (аутентификатор) (если нету токена - лезть в refresh_jwt)
+            refresh_jwt: # (аутентификатор)
+                check_path: api_refresh_token
             logout:
-                path: /api/token/invalidate
+                path: api_token_invalidate
 
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: /api/token/(get|refresh), roles: PUBLIC_ACCESS }
-        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        - { path: /api/token/(get|refresh|invalidate), roles: PUBLIC_ACCESS}
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
