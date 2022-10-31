@@ -5,9 +5,9 @@ gesdinet_jwt_refresh_token:
 
     cookie:
         enabled: true
-        same_site: lax               # default value
-        path: /                      # default value
-        domain: null                 # default value
+        same_site: strict               # default value (указание будут ли (и когда) файлы куки отправляться с межсайтовыми запросами)
+        path: /api/token                      # default value (путь, который должен быть в запрашиваемом урле)
+        domain: 127.0.0.1           # default value (какие хосты могут принимать куки)
         http_only: true              # default value
-        secure: true                 # default value
+        secure: false                 # default value
         remove_token_from_body: true # default value
