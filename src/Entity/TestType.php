@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\TestTypeRepository;
+use App\Resource\ResourceInterface;
+use App\Resource\TestTypeResource;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'test_types')]
 #[ORM\Entity(repositoryClass: TestTypeRepository::class)]
-class TestType
+class TestType extends BasicEntity implements EntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -32,5 +34,10 @@ class TestType
         $this->title = $title;
 
         return $this;
+    }
+
+    public function toResource(): ResourceInterface
+    {
+        return new TestTypeResource($this->id, $this->title);
     }
 }
