@@ -14,7 +14,7 @@ class TestType
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(length: 50)]
     private ?string $title = null;
 
     public function getId(): ?int
