@@ -4,11 +4,11 @@
 namespace App\Format\ResponseFormat\UserResponseFormat;
 
 
-use App\Resource\UserResource;
+use App\Resource\ResourceInterface;
 
 class OneUserResponseFormat
 {
-    public function __construct(public UserResource $userResource)
+    public function __construct(public ResourceInterface $userResource)
     {
     }
 }
