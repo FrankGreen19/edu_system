@@ -25,7 +25,6 @@ class TestTypeController extends BasicController
     #[Route(methods: [Request::METHOD_GET])]
     public function index(): JsonResponse
     {
-        /** @var EntityInterface[] $testTypes */
         $testTypes = $this->module->getTestTypes();
         $resources = [];
 

@@ -4,6 +4,7 @@
 namespace App\Module;
 
 
+use App\Entity\TestType;
 use App\Repository\TestTypeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use JetBrains\PhpStorm\Pure;
@@ -21,6 +22,9 @@ class TestTypeModule extends BasicModule
         $this->testTypeRepository = $testTypeRepository;
     }
 
+    /**
+     * @return TestType[]
+     */
     public function getTestTypes(): array
     {
         return $this->testTypeRepository->findAll();
