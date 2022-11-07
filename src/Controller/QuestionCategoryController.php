@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\QuestionCategory;
 use App\Format\ResponseFormat\QuestionCategoryResponseFormat\QuestionCategoryListResponseFormat;
 use App\Module\QuestionCategoryModule;
 use App\Module\UserModule;
@@ -26,7 +27,20 @@ class QuestionCategoryController extends AuthenticatedController
     #[Route('/common', methods: [Request::METHOD_GET])]
     public function getCommonCategories(): JsonResponse
     {
-        $cats = $this->module->getCommonCategories();
+        $cats = $this->module->getCategories(QuestionCategory::AUTHORLESS);
+        $catResources = [];
+
+        foreach ($cats as $cat) {
+            $catResources[] = $cat->toResource();
+        }
+
+        return $this->json(new QuestionCategoryListResponseFormat($catResources));
+    }
+
+    #[Route('/authored', methods: [Request::METHOD_GET])]
+    public function getAuthoredCategories(): JsonResponse
+    {
+        $cats = $this->module->getCategories($this->getUser());
         $catResources = [];
 
         foreach ($cats as $cat) {
