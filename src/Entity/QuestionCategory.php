@@ -3,13 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\QuestionCategoryRepository;
+use App\Resource\QuestionCategoryResource;
+use App\Resource\ResourceInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'question_categories')]
 #[ORM\Entity(repositoryClass: QuestionCategoryRepository::class)]
-class QuestionCategory
+class QuestionCategory extends BasicEntity implements EntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -24,6 +26,8 @@ class QuestionCategory
 
     #[ORM\OneToMany(mappedBy: 'questionCategory', targetEntity: Question::class, orphanRemoval: true)]
     private Collection $questions;
+
+    const AUTHORLESS = null;
 
     public function __construct()
     {
@@ -87,5 +91,13 @@ class QuestionCategory
         }
 
         return $this;
+    }
+
+    public function toResource(): ResourceInterface
+    {
+        return new QuestionCategoryResource(
+            $this->id,
+            $this->title,
+        );
     }
 }
