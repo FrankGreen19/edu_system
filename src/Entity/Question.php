@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\QuestionRepository;
+use App\Resource\QuestionResource;
+use App\Resource\ResourceInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'questions')]
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
-class Question
+class Question extends BasicEntity implements EntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -78,5 +80,15 @@ class Question
         $this->questionCategory = $questionCategory;
 
         return $this;
+    }
+
+    public function toResource(): ResourceInterface
+    {
+        return new QuestionResource(
+            $this->id,
+            $this->description,
+            $this->answer,
+            $this->questionCategory->getId()
+        );
     }
 }
