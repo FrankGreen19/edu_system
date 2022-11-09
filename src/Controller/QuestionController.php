@@ -23,7 +23,7 @@ class QuestionController extends BasicController
         $this->module = $module;
     }
 
-    #[Route('/question', methods: [Request::METHOD_GET])]
+    #[Route('/question', methods: [Request::METHOD_POST])]
     public function getQuestions(Request $request): JsonResponse
     {
         /** @var QuestionRequestFormat $requestFormat */
