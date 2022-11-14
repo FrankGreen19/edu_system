@@ -5,7 +5,7 @@ namespace App\Tests\Resource\Fixture;
 
 
 use App\Entity\Group;
-use App\Entity\OrderedTestQuestion;
+use App\Entity\TestQuestion;
 use App\Entity\Question;
 use App\Entity\QuestionCategory;
 use App\Entity\Role;
@@ -127,7 +127,7 @@ class AppFixture extends Fixture
                 $manager->flush();
 
                 if ($category->getTitle() === 'Какая-то авторская категория') {
-                    $orderedTestQuestion = new OrderedTestQuestion();
+                    $orderedTestQuestion = new TestQuestion();
                     $orderedTestQuestion->setQuestion($question);
                     $orderedTestQuestion->setTest($test);
                     $orderedTestQuestion->setSortOrder($i);
@@ -135,7 +135,7 @@ class AppFixture extends Fixture
                     $manager->persist($orderedTestQuestion);
                     $manager->flush();
 
-                    $test->addOrderedTestQuestion($orderedTestQuestion);
+                    $test->addTestQuestion($orderedTestQuestion);
                 }
             }
 

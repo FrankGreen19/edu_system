@@ -2,25 +2,25 @@
 
 namespace App\Entity;
 
-use App\Repository\OrderedTestQuestionRepository;
+use App\Repository\TestQuestionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Table(name: 'ordered_test_questions')]
-#[ORM\Entity(repositoryClass: OrderedTestQuestionRepository::class)]
-class OrderedTestQuestion
+#[ORM\Table(name: 'test_questions')]
+#[ORM\Entity(repositoryClass: TestQuestionRepository::class)]
+class TestQuestion
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'orderedTestQuestions')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'testQuestions')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?test $test = null;
+    private ?Test $test = null;
 
     #[ORM\ManyToOne()]
     #[ORM\JoinColumn(nullable: false)]
-    private ?question $question = null;
+    private ?Question $question = null;
 
     #[ORM\Column]
     private ?int $sortOrder = null;

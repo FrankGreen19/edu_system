@@ -42,8 +42,8 @@ class Test
     #[ORM\JoinColumn(nullable: false)]
     private ?TestType $testType = null;
 
-    #[ORM\OneToMany(mappedBy: 'test', targetEntity: OrderedTestQuestion::class, orphanRemoval: true)]
-    private Collection $orderedTestQuestions;
+    #[ORM\OneToMany(mappedBy: 'test', targetEntity: TestQuestion::class, cascade: ['persist'], orphanRemoval: true)]
+    private Collection $testQuestions;
 
     #[ORM\ManyToOne]
     private ?QuestionCategory $questionCategory = null;
@@ -53,7 +53,7 @@ class Test
 
     public function __construct()
     {
-        $this->orderedTestQuestions = new ArrayCollection();
+        $this->testQuestions = new ArrayCollection();
         $this->userTests = new ArrayCollection();
     }
 
@@ -159,29 +159,29 @@ class Test
     }
 
     /**
-     * @return Collection<int, OrderedTestQuestion>
+     * @return Collection<int, TestQuestion>
      */
-    public function getOrderedTestQuestions(): Collection
+    public function getTestQuestions(): Collection
     {
-        return $this->orderedTestQuestions;
+        return $this->testQuestions;
     }
 
-    public function addOrderedTestQuestion(OrderedTestQuestion $orderedTestQuestion): self
+    public function addTestQuestion(TestQuestion $orderedTestQuestion): self
     {
-        if (!$this->orderedTestQuestions->contains($orderedTestQuestion)) {
-            $this->orderedTestQuestions->add($orderedTestQuestion);
+        if (!$this->testQuestions->contains($orderedTestQuestion)) {
+            $this->testQuestions->add($orderedTestQuestion);
             $orderedTestQuestion->setTest($this);
         }
 
         return $this;
     }
 
-    public function removeOrderedTestQuestion(OrderedTestQuestion $orderedTestQuestion): self
+    public function removeTestQuestion(TestQuestion $testQuestion): self
     {
-        if ($this->orderedTestQuestions->removeElement($orderedTestQuestion)) {
+        if ($this->testQuestions->removeElement($testQuestion)) {
             // set the owning side to null (unless already changed)
-            if ($orderedTestQuestion->getTest() === $this) {
-                $orderedTestQuestion->setTest(null);
+            if ($testQuestion->getTest() === $this) {
+                $testQuestion->setTest(null);
             }
         }
 
