@@ -18,7 +18,7 @@ class OrderedTestQuestion
     #[ORM\JoinColumn(nullable: false)]
     private ?test $test = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne()]
     #[ORM\JoinColumn(nullable: false)]
     private ?question $question = null;
 
