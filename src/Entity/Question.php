@@ -87,8 +87,6 @@ class Question extends BasicEntity implements EntityInterface
         return new QuestionResource(
             $this->id,
             $this->description,
-            $this->answer,
-            $this->questionCategory->getId()
         );
     }
 }

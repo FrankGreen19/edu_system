@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TestRepository;
+use App\Resource\ResourceInterface;
+use App\Resource\TestResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'tests')]
 #[ORM\Entity(repositoryClass: TestRepository::class)]
-class Test
+class Test extends BasicEntity implements EntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -228,5 +230,24 @@ class Test
         }
 
         return $this;
+    }
+
+    public function toResource(): ResourceInterface
+    {
+        $questionResources = [];
+        foreach ($this->getTestQuestions() as $question) {
+            $questionResources[] = $question->toResource();
+        }
+
+        return new TestResource(
+            $this->id,
+            $this->title,
+            $this->questionsNumber,
+            $this->finishDate->format('Y-m-d'),
+            $this->executionTime,
+            $this->testType->getId(),
+            $questionResources,
+            $this->questionCategory->getId(),
+        );
     }
 }

@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\TestQuestionRepository;
+use App\Resource\ResourceInterface;
+use App\Resource\TestQuestionResource;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'test_questions')]
 #[ORM\Entity(repositoryClass: TestQuestionRepository::class)]
-class TestQuestion
+class TestQuestion implements EntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -64,5 +66,15 @@ class TestQuestion
         $this->sortOrder = $sortOrder;
 
         return $this;
+    }
+
+    public function toResource(): ResourceInterface
+    {
+        return new TestQuestionResource(
+            $this->id,
+            $this->test->getId(),
+            $this->question->getId(),
+            $this->sortOrder
+        );
     }
 }
