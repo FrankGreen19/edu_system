@@ -4,13 +4,13 @@
 namespace App\Module;
 
 
-use App\Entity\TestQuestion;
 use App\Entity\Test;
+use App\Entity\TestQuestion;
+use App\Entity\TestType;
 use App\Entity\User;
 use App\Format\RequestFormat\TestRequestFormat\NewTestRequestFormat;
 use App\Repository\QuestionCategoryRepository;
 use App\Repository\QuestionRepository;
-use App\Repository\TestRepository;
 use App\Repository\TestTypeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -18,7 +18,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class TestModule extends BasicModule
 {
     public function __construct(ManagerRegistry $registry, ValidatorInterface $validator,
-                                private TestRepository $testRepository,
                                 private TestTypeRepository $testTypeRepository,
                                 private QuestionRepository $questionRepository,
                                 private QuestionCategoryRepository $questionCategoryRepository
@@ -32,15 +31,26 @@ class TestModule extends BasicModule
         $test = new Test();
         $test->setTitle($reqFormat->title);
         $test->setAuthor($user);
-        $test->setQuestionsNumber($reqFormat->questionsNumber);
         $test->setQuestionCategory($this->questionCategoryRepository->find($reqFormat->questionCategoryId));
         $test->setCreateDate(new \DateTime());
         $test->setFinishDate(new \DateTime($reqFormat->finishDate));
         $test->setExecutionTime($reqFormat->executionTime);
         $test->setTestType($this->testTypeRepository->find($reqFormat->testTypeId));
 
+        $questions = [];
+        switch ($test->getTestType()->getAlias()) {
+            case TestType::TYPE_CUSTOM:
+                $questions = $reqFormat->questions;
+                break;
+            case TestType::TYPE_GENERATED:
+                $test->setQuestionsNumber($reqFormat->questionsNumber);
+                $questions = $this->questionRepository->findRandomQuestionsByCategory($test->getQuestionCategory()->getId(),
+                    $test->getQuestionsNumber());
+                break;
+        }
+
         $counter = 1;
-        foreach ($reqFormat->questions as $question) {
+        foreach ($questions as $question) {
             $testQuestion = new TestQuestion();
             $testQuestion->setSortOrder($counter);
             $testQuestion->setTest($test);

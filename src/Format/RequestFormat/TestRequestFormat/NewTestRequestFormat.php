@@ -35,12 +35,12 @@ class NewTestRequestFormat
     #[NotBlank]
     public ?int $questionCategoryId = null;
 
-    public function __construct(?string $title, ?int $questionsNumber,
+    public function __construct(?string $title, ?string $questionsNumber,
                                 ?string $finishDate, ?string $executionTime, ?int $testTypeId,
                                 ?array $questions, ?int $questionCategoryId)
     {
         $this->title = $title;
-        $this->questionsNumber = $questionsNumber;
+        $this->questionsNumber = intval($questionsNumber);
         $this->finishDate = $finishDate;
         $this->executionTime = intval($executionTime);
         $this->testTypeId = $testTypeId;
