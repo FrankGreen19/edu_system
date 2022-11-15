@@ -19,6 +19,12 @@ class TestType extends BasicEntity implements EntityInterface
     #[ORM\Column(length: 50)]
     private ?string $title = null;
 
+    #[ORM\Column(length: 50)]
+    private ?string $alias = null;
+
+    const TYPE_GENERATED = 'generated';
+    const TYPE_CUSTOM    = 'custom';
+
     public function getId(): ?int
     {
         return $this->id;
@@ -27,6 +33,16 @@ class TestType extends BasicEntity implements EntityInterface
     public function getTitle(): ?string
     {
         return $this->title;
+    }
+
+    public function getAlias(): ?string
+    {
+        return $this->alias;
+    }
+
+    public function setAlias(?string $alias): void
+    {
+        $this->alias = $alias;
     }
 
     public function setTitle(string $title): self
