@@ -28,7 +28,7 @@ class Test extends BasicEntity implements EntityInterface
     #[ORM\ManyToOne(inversedBy: 'authoredTests')]
     private ?User $author = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $questionsNumber = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
