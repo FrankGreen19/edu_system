@@ -8,11 +8,13 @@ use App\Entity\Test;
 use App\Entity\TestQuestion;
 use App\Entity\TestType;
 use App\Entity\User;
+use App\Exception\NotFoundException;
 use App\Format\RequestFormat\TestRequestFormat\NewTestRequestFormat;
 use App\Repository\QuestionCategoryRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\TestRepository;
 use App\Repository\TestTypeRepository;
+use App\Resource\TestResource;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -83,5 +85,19 @@ class TestModule extends BasicModule
     public function getTestById(int $id): ?Test
     {
         return $this->testRepository->find($id);
+    }
+
+    /**
+     * @param User $author
+     * @return Test[]
+     */
+    public function getTestsByAuthor(User $author): array
+    {
+        $tests = $this->testRepository->findBy(['author' => $author]);
+        if (!$tests) {
+            throw new NotFoundException();
+        }
+
+        return $tests;
     }
 }

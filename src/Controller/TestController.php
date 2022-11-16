@@ -22,8 +22,21 @@ class TestController extends AuthenticatedController
         parent::__construct($validator, $serializer, $userModule);
     }
 
+    #[Route('/authored', methods: Request::METHOD_GET)]
+    public function getTestsByAuthor(): JsonResponse
+    {
+        $tests = $this->testModule->getTestsByAuthor($this->getUser());
+
+        $testResources = [];
+        foreach ($tests as $test) {
+            $testResources[] = $test->toResource();
+        }
+
+        return $this->json(['testResources' => $testResources]);
+    }
+
     #[Route('/{id}',methods: Request::METHOD_GET)]
-    public function getTest($id): JsonResponse
+    public function getTest(int $id): JsonResponse
     {
         if (!$id) {
             return $this->json([], Response::HTTP_NOT_FOUND);
