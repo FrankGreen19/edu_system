@@ -245,9 +245,9 @@ class Test extends BasicEntity implements EntityInterface
             $this->questionsNumber,
             $this->finishDate->format('Y-m-d'),
             $this->executionTime,
-            $this->testType->getId(),
+            $this->testType->toResource(),
             $questionResources,
-            $this->questionCategory->getId(),
+            $this->questionCategory->toResource(),
         );
     }
 }

@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Format\RequestFormat\TestRequestFormat\NewTestRequestFormat;
 use App\Repository\QuestionCategoryRepository;
 use App\Repository\QuestionRepository;
+use App\Repository\TestRepository;
 use App\Repository\TestTypeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -20,7 +21,8 @@ class TestModule extends BasicModule
     public function __construct(ManagerRegistry $registry, ValidatorInterface $validator,
                                 private TestTypeRepository $testTypeRepository,
                                 private QuestionRepository $questionRepository,
-                                private QuestionCategoryRepository $questionCategoryRepository
+                                private QuestionCategoryRepository $questionCategoryRepository,
+                                private TestRepository $testRepository
     )
     {
         parent::__construct($registry, $validator);
@@ -76,5 +78,10 @@ class TestModule extends BasicModule
         } else {
             return null;
         }
+    }
+
+    public function getTestById(int $id): ?Test
+    {
+        return $this->testRepository->find($id);
     }
 }

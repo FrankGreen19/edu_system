@@ -11,21 +11,21 @@ class TestResource implements ResourceInterface
     public ?int $questionsNumber = null;
     public ?string $finishDate = null;
     public ?int $executionTime = null;
-    public ?int $testTypeId = null;
+    public ?TestTypeResource $testType = null;
     public ?array $questions;
-    public ?int $questionCategoryId = null;
+    public ?QuestionCategoryResource $questionCategory = null;
 
     public function __construct(int $id, ?string $title, ?int $questionsNumber,
-                                ?string $finishDate, ?string $executionTime, ?int $testTypeId,
-                                ?array $questions, ?int $questionCategoryId)
+                                ?string $finishDate, ?string $executionTime, ?ResourceInterface $testType,
+                                ?array $questions, ?ResourceInterface $questionCategory)
     {
         $this->id = $id;
         $this->title = $title;
         $this->questionsNumber = $questionsNumber;
         $this->finishDate = $finishDate;
         $this->executionTime = intval($executionTime);
-        $this->testTypeId = $testTypeId;
+        $this->testType = $testType;
         $this->questions = $questions;
-        $this->questionCategoryId = $questionCategoryId;
+        $this->questionCategory = $questionCategory;
     }
 }
