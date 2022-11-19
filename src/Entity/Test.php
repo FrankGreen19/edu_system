@@ -53,6 +53,9 @@ class Test extends BasicEntity implements EntityInterface
     #[ORM\OneToMany(mappedBy: 'test', targetEntity: UserTest::class)]
     private Collection $userTests;
 
+    #[ORM\Column(length: 255)]
+    private ?string $code = null;
+
     public function __construct()
     {
         $this->testQuestions = new ArrayCollection();
@@ -230,6 +233,16 @@ class Test extends BasicEntity implements EntityInterface
         }
 
         return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
     }
 
     public function toResource(): ResourceInterface
