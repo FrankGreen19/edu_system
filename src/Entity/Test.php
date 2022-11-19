@@ -240,9 +240,9 @@ class Test extends BasicEntity implements EntityInterface
         return $this->code;
     }
 
-    public function setCode(?string $code): void
+    public function generateCode(): void
     {
-        $this->code = $code;
+        $this->code = hash('md4', $this->title.$this->author->getEmail().$this->executionTime);
     }
 
     public function toResource(): ResourceInterface

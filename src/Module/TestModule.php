@@ -40,6 +40,7 @@ class TestModule extends BasicModule
         $test->setFinishDate(new \DateTime($reqFormat->finishDate));
         $test->setExecutionTime($reqFormat->executionTime);
         $test->setTestType($this->testTypeRepository->find($reqFormat->testTypeId));
+        $test->generateCode();
 
         $questions = [];
         switch ($test->getTestType()->getAlias()) {
