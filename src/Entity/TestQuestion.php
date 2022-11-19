@@ -74,7 +74,8 @@ class TestQuestion implements EntityInterface
             $this->id,
             $this->test->getId(),
             $this->question->getId(),
-            $this->sortOrder
+            $this->sortOrder,
+            $this->question->getDescription(),
         );
     }
 }

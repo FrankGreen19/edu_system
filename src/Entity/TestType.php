@@ -54,6 +54,6 @@ class TestType extends BasicEntity implements EntityInterface
 
     public function toResource(): ResourceInterface
     {
-        return new TestTypeResource($this->id, $this->title);
+        return new TestTypeResource($this->id, $this->title, $this->alias);
     }
 }
