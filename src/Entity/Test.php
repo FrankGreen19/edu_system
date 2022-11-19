@@ -242,7 +242,7 @@ class Test extends BasicEntity implements EntityInterface
 
     public function generateCode(): void
     {
-        $this->code = hash('md4', $this->title.$this->author->getEmail().$this->executionTime);
+        $this->code = hash('md4', $this->title.$this->author->getEmail().$this->createDate->format('c'));
     }
 
     public function toResource(): ResourceInterface
@@ -261,6 +261,7 @@ class Test extends BasicEntity implements EntityInterface
             $this->testType->toResource(),
             $questionResources,
             $this->questionCategory->toResource(),
+            $this->code,
         );
     }
 }

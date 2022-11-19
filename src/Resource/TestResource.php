@@ -14,10 +14,11 @@ class TestResource implements ResourceInterface
     public ?TestTypeResource $testType = null;
     public ?array $questions;
     public ?QuestionCategoryResource $questionCategory = null;
+    public string $code;
 
     public function __construct(int $id, ?string $title, ?int $questionsNumber,
                                 ?string $finishDate, ?string $executionTime, ?ResourceInterface $testType,
-                                ?array $questions, ?ResourceInterface $questionCategory)
+                                ?array $questions, ?ResourceInterface $questionCategory, string $code)
     {
         $this->id = $id;
         $this->title = $title;
@@ -27,5 +28,6 @@ class TestResource implements ResourceInterface
         $this->testType = $testType;
         $this->questions = $questions;
         $this->questionCategory = $questionCategory;
+        $this->code = $code;
     }
 }
