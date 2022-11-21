@@ -103,6 +103,16 @@ class TestModule extends BasicModule
         return $tests;
     }
 
+    public function getTestByCode(string $code): ?Test
+    {
+        $test = $this->testRepository->findOneBy(['code' => $code]);
+        if (!$test) {
+            throw new NotFoundException();
+        }
+
+        return $test;
+    }
+
     public function update(ExistingTestRequestFormat $format): ?Test
     {
         $test = $this->testRepository->find($format->id);

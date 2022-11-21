@@ -52,6 +52,18 @@ class TestController extends AuthenticatedController
         }
     }
 
+    #[Route('/test-by-code/{code}',methods: Request::METHOD_GET)]
+    public function getTestByCode(?string $code): JsonResponse
+    {
+        if (!$code) {
+            return $this->json([], Response::HTTP_NOT_FOUND);
+        }
+
+        $test = $this->testModule->getTestByCode($code);
+
+        return $this->json(new OneTestResponseFormat($test->toResource()));
+    }
+
     #[Route(methods: Request::METHOD_POST)]
     public function addTest(Request $request): JsonResponse
     {
