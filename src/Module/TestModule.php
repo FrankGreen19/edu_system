@@ -9,6 +9,7 @@ use App\Entity\TestQuestion;
 use App\Entity\TestType;
 use App\Entity\User;
 use App\Exception\NotFoundException;
+use App\Format\RequestFormat\TestRequestFormat\ExistingTestRequestFormat;
 use App\Format\RequestFormat\TestRequestFormat\NewTestRequestFormat;
 use App\Repository\QuestionCategoryRepository;
 use App\Repository\QuestionRepository;
@@ -100,5 +101,29 @@ class TestModule extends BasicModule
         }
 
         return $tests;
+    }
+
+    public function update(ExistingTestRequestFormat $format): ?Test
+    {
+        $test = $this->testRepository->find($format->id);
+        if (!$test) {
+            throw new NotFoundException();
+        }
+
+        $finishDate = new \DateTime($format->finishDate);
+
+        $test->setExecutionTime($format->executionTime);
+        $test->setFinishDate($finishDate);
+
+        $em = $this->registry->getManager();
+        $em->persist($test);
+        $em->flush();
+
+        if ($test->getExecutionTime() === $format->executionTime
+            && $test->getFinishDate() === $finishDate) {
+            return $test;
+        } else {
+            return null;
+        }
     }
 }

@@ -35,8 +35,8 @@ class NewTestRequestFormat
     #[NotBlank]
     public ?int $questionCategoryId = null;
 
-    public function __construct(?string $title, ?string $questionsNumber,
-                                ?string $finishDate, ?string $executionTime, ?int $testTypeId,
+    public function __construct(?string $title, ?int $questionsNumber,
+                                ?string $finishDate, ?int $executionTime, ?int $testTypeId,
                                 ?array $questions, ?int $questionCategoryId)
     {
         $this->title = $title;

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Format\RequestFormat\TestRequestFormat\ExistingTestRequestFormat;
 use App\Format\RequestFormat\TestRequestFormat\NewTestRequestFormat;
 use App\Format\ResponseFormat\TestResponseFormat\OneTestResponseFormat;
 use App\Module\TestModule;
@@ -61,6 +62,24 @@ class TestController extends AuthenticatedController
         }
 
         $test = $this->testModule->addTest($requestFormat, $this->getUser());
+
+        if ($test) {
+            return $this->json(new OneTestResponseFormat($test->toResource()));
+        } else {
+            return $this->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[Route(methods: Request::METHOD_PUT)]
+    public function updateTest(Request $request): JsonResponse
+    {
+        $requestFormat = $this->serializer->deserialize($request->getContent(), ExistingTestRequestFormat::class, 'json');
+        $errors = $this->validator->validate($requestFormat);
+        if ($errors->count() > 0) {
+            return $this->json($errors, Response::HTTP_BAD_REQUEST);
+        }
+
+        $test = $this->testModule->update($requestFormat);
 
         if ($test) {
             return $this->json(new OneTestResponseFormat($test->toResource()));
