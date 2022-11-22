@@ -3,13 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\UserTestRepository;
+use App\Resource\ResourceInterface;
+use App\Resource\UserTestResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'user_tests')]
 #[ORM\Entity(repositoryClass: UserTestRepository::class)]
-class UserTest
+class UserTest implements EntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -119,5 +121,14 @@ class UserTest
         $this->startedAt = $startedAt;
 
         return $this;
+    }
+
+    public function toResource(): ResourceInterface
+    {
+        return new UserTestResource(
+            $this->getId(),
+            $this->getUser()->getId(),
+            $this->test->getId(),
+        );
     }
 }
