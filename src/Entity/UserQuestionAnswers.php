@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\UserQuestionAnswersRepository;
+use App\Resource\ResourceInterface;
+use App\Resource\UserQuestionAnswerResource;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'user_question_answers')]
 #[ORM\Entity(repositoryClass: UserQuestionAnswersRepository::class)]
-class UserQuestionAnswers
+class UserQuestionAnswers implements EntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -64,5 +66,14 @@ class UserQuestionAnswers
         $this->answer = $answer;
 
         return $this;
+    }
+
+    public function toResource(): ResourceInterface
+    {
+        return new UserQuestionAnswerResource(
+            $this->userTest->getId(),
+            $this->question->getId(),
+            $this->answer
+        );
     }
 }

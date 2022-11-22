@@ -34,7 +34,7 @@ class UserTestController extends AuthenticatedController
 
         $userTest = $this->module->addUserTest($requestFormat, $this->getUser());
         if ($userTest instanceof UserTest) {
-            return $this->json($userTest->toResource());
+            return $this->json(['userTestResource' => $userTest->toResource()]);
         } else {
             $this->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
