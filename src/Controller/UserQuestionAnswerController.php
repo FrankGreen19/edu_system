@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\UserQuestionAnswers;
+use App\Entity\UserQuestionAnswer;
 use App\Format\RequestFormat\UserQuestionAnswerRequestFormat\AddQuestionAnswerRequestFormat;
 use App\Format\RequestFormat\UserTestRequestFormat\UserTestRequestFormat;
 use App\Module\UserQuestionAnswerModule;
@@ -33,7 +33,7 @@ class UserQuestionAnswerController extends BasicController
         }
 
         $answer = $this->module->addNewAnswer($requestFormat);
-        if ($answer instanceof UserQuestionAnswers) {
+        if ($answer instanceof UserQuestionAnswer) {
             return $this->json($answer->toResource());
         } else {
             return $this->json([], Response::HTTP_INTERNAL_SERVER_ERROR);

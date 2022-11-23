@@ -29,7 +29,7 @@ class UserTest implements EntityInterface
     #[ORM\Column(nullable: true)]
     private ?float $result = null;
 
-    #[ORM\OneToMany(mappedBy: 'userTest', targetEntity: UserQuestionAnswers::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'userTest', targetEntity: UserQuestionAnswer::class, orphanRemoval: true)]
     private Collection $userQuestionAnswers;
 
     #[ORM\Column]
@@ -82,14 +82,14 @@ class UserTest implements EntityInterface
     }
 
     /**
-     * @return Collection<int, UserQuestionAnswers>
+     * @return Collection<int, UserQuestionAnswer>
      */
     public function getUserQuestionAnswers(): Collection
     {
         return $this->userQuestionAnswers;
     }
 
-    public function addUserQuestionAnswer(UserQuestionAnswers $userQuestionAnswer): self
+    public function addUserQuestionAnswer(UserQuestionAnswer $userQuestionAnswer): self
     {
         if (!$this->userQuestionAnswers->contains($userQuestionAnswer)) {
             $this->userQuestionAnswers->add($userQuestionAnswer);
@@ -99,7 +99,7 @@ class UserTest implements EntityInterface
         return $this;
     }
 
-    public function removeUserQuestionAnswer(UserQuestionAnswers $userQuestionAnswer): self
+    public function removeUserQuestionAnswer(UserQuestionAnswer $userQuestionAnswer): self
     {
         if ($this->userQuestionAnswers->removeElement($userQuestionAnswer)) {
             // set the owning side to null (unless already changed)

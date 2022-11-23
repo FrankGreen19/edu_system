@@ -4,7 +4,7 @@
 namespace App\Module;
 
 
-use App\Entity\UserQuestionAnswers;
+use App\Entity\UserQuestionAnswer;
 use App\Format\RequestFormat\UserQuestionAnswerRequestFormat\AddQuestionAnswerRequestFormat;
 use App\Repository\QuestionRepository;
 use App\Repository\UserQuestionAnswersRepository;
@@ -22,9 +22,9 @@ class UserQuestionAnswerModule extends BasicModule
         parent::__construct($registry, $validator);
     }
 
-    public function addNewAnswer(AddQuestionAnswerRequestFormat $format): ?UserQuestionAnswers
+    public function addNewAnswer(AddQuestionAnswerRequestFormat $format): ?UserQuestionAnswer
     {
-        $answer = new UserQuestionAnswers();
+        $answer = new UserQuestionAnswer();
         $answer->setQuestion($this->questionRepository->find($format->questionId));
         $answer->setUserTest($this->userTestRepository->find($format->userTestId));
         $answer->setAnswer($format->answer);

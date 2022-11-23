@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'user_question_answers')]
 #[ORM\Entity(repositoryClass: UserQuestionAnswersRepository::class)]
-class UserQuestionAnswers implements EntityInterface
+class UserQuestionAnswer implements EntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
