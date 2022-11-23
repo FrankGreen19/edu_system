@@ -28,6 +28,7 @@ class UserQuestionAnswerModule extends BasicModule
         $answer->setQuestion($this->questionRepository->find($format->questionId));
         $answer->setUserTest($this->userTestRepository->find($format->userTestId));
         $answer->setAnswer($format->answer);
+        $answer->setCorrect($format->answer === $answer->getQuestion()->getAnswer());
 
         $em = $this->registry->getManager();
         $em->persist($answer);

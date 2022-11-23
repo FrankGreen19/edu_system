@@ -27,6 +27,9 @@ class UserQuestionAnswer implements EntityInterface
     #[ORM\Column(length: 100)]
     private ?string $answer = null;
 
+    #[ORM\Column(nullable: false)]
+    private ?bool $correct;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,12 +71,23 @@ class UserQuestionAnswer implements EntityInterface
         return $this;
     }
 
+    public function getCorrect(): ?bool
+    {
+        return $this->correct;
+    }
+
+    public function setCorrect(?bool $correct): void
+    {
+        $this->correct = $correct;
+    }
+
     public function toResource(): ResourceInterface
     {
         return new UserQuestionAnswerResource(
             $this->userTest->getId(),
             $this->question->getId(),
-            $this->answer
+            $this->answer,
+            $this->correct,
         );
     }
 }
