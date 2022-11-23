@@ -71,7 +71,7 @@ class UserQuestionAnswer implements EntityInterface
         return $this;
     }
 
-    public function getCorrect(): ?bool
+    public function isCorrect(): ?bool
     {
         return $this->correct;
     }

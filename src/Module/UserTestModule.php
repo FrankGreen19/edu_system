@@ -6,6 +6,8 @@ namespace App\Module;
 
 use App\Entity\User;
 use App\Entity\UserTest;
+use App\Exception\NotFoundException;
+use App\Format\RequestFormat\UserTestRequestFormat\ExtendedUserTestRequestFormat;
 use App\Format\RequestFormat\UserTestRequestFormat\UserTestRequestFormat;
 use App\Repository\TestRepository;
 use App\Repository\UserTestRepository;
@@ -29,6 +31,34 @@ class UserTestModule extends BasicModule
         $userTest->setUser($user);
         $userTest->setTest($this->testRepository->find($format->testId));
         $userTest->setStartedAt(new \DateTimeImmutable());
+
+        $em = $this->registry->getManager();
+        $em->persist($userTest);
+        $em->flush();
+
+        if ($userTest->getId()) {
+            return $userTest;
+        } else {
+            return null;
+        }
+    }
+
+    public function updateUserTest(ExtendedUserTestRequestFormat $format): ?UserTest
+    {
+        $userTest = $this->userTestRepository->find($format->id);
+        if (!$userTest) {
+            throw new NotFoundException();
+        }
+
+        $result = 0;
+        foreach ($userTest->getUserQuestionAnswers() as $answer) {
+            if ($answer->isCorrect()) {
+                $result++;
+            }
+        }
+
+        $questionNumber = sizeof($userTest->getTest()->getTestQuestions());
+        $userTest->setResult(($result * 100) / $questionNumber);
 
         $em = $this->registry->getManager();
         $em->persist($userTest);

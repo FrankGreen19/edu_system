@@ -82,11 +82,11 @@ class UserTest implements EntityInterface
     }
 
     /**
-     * @return Collection<int, UserQuestionAnswer>
+     * @return UserQuestionAnswer[]
      */
-    public function getUserQuestionAnswers(): Collection
+    public function getUserQuestionAnswers(): array
     {
-        return $this->userQuestionAnswers;
+        return $this->userQuestionAnswers->toArray();
     }
 
     public function addUserQuestionAnswer(UserQuestionAnswer $userQuestionAnswer): self
@@ -129,6 +129,7 @@ class UserTest implements EntityInterface
             $this->getId(),
             $this->getUser()->getId(),
             $this->test->getId(),
+            $this->getResult(),
         );
     }
 }

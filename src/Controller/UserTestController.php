@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\UserTest;
+use App\Format\RequestFormat\UserTestRequestFormat\ExtendedUserTestRequestFormat;
 use App\Format\RequestFormat\UserTestRequestFormat\UserTestRequestFormat;
 use App\Module\UserModule;
 use App\Module\UserTestModule;
@@ -36,7 +37,24 @@ class UserTestController extends AuthenticatedController
         if ($userTest instanceof UserTest) {
             return $this->json(['userTestResource' => $userTest->toResource()]);
         } else {
-            $this->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[Route(methods: Request::METHOD_PUT)]
+    public function updateUserTest(Request $request): JsonResponse
+    {
+        $requestFormat = $this->serializer->deserialize($request->getContent(), ExtendedUserTestRequestFormat::class, 'json');
+        $errors = $this->validator->validate($requestFormat);
+        if ($errors->count() > 0) {
+            return $this->json($errors, Response::HTTP_BAD_REQUEST);
+        }
+
+        $userTest = $this->module->updateUserTest($requestFormat);
+        if ($userTest instanceof UserTest) {
+            return $this->json(['userTestResource' => $userTest->toResource()]);
+        } else {
+            return $this->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
