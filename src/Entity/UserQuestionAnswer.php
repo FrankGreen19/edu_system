@@ -88,6 +88,7 @@ class UserQuestionAnswer implements EntityInterface
             $this->question->getId(),
             $this->answer,
             $this->correct,
+            $this->getQuestion()->getDescription()
         );
     }
 }

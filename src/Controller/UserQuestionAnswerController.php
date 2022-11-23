@@ -34,7 +34,7 @@ class UserQuestionAnswerController extends BasicController
 
         $answer = $this->module->addNewAnswer($requestFormat);
         if ($answer instanceof UserQuestionAnswer) {
-            return $this->json($answer->toResource());
+            return $this->json(['userQuestionAnswerResource' => $answer->toResource()]);
         } else {
             return $this->json([], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
