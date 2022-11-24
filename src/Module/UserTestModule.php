@@ -70,4 +70,13 @@ class UserTestModule extends BasicModule
             return null;
         }
     }
+
+    /**
+     * @param User $user
+     * @return ?UserTest[]
+     */
+    public function getUserTests(User $user): ?array
+    {
+        return $this->userTestRepository->findBy(['user' => $user]);
+    }
 }

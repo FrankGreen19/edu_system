@@ -125,11 +125,18 @@ class UserTest implements EntityInterface
 
     public function toResource(): ResourceInterface
     {
+        $answers = [];
+        foreach ($this->getUserQuestionAnswers() as $answer) {
+            $answers[] = $answer->toResource();
+        }
+
         return new UserTestResource(
             $this->getId(),
             $this->getUser()->getId(),
             $this->test->getId(),
             $this->getResult(),
+            $this->getTest()->getQuestionCategory()->getTitle(),
+            $answers,
         );
     }
 }

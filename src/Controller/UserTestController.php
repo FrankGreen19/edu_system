@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route('/api/user/test', name: 'app_user_test')]
+#[Route('/api/user/test')]
 class UserTestController extends AuthenticatedController
 {
     public function __construct(ValidatorInterface $validator, SerializerInterface $serializer, UserModule $userModule,
@@ -22,6 +22,19 @@ class UserTestController extends AuthenticatedController
     )
     {
         parent::__construct($validator, $serializer, $userModule);
+    }
+
+    #[Route(methods: Request::METHOD_GET)]
+    public function getUserTests(): JsonResponse
+    {
+        $userTests = $this->module->getUserTests($this->getUser());
+
+        $resources = [];
+        foreach ($userTests as $test) {
+            $resources[] = $test->toResource();
+        }
+
+        return $this->json(['userTestsResources' => $resources]);
     }
 
     #[Route(methods: Request::METHOD_POST)]
