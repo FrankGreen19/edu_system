@@ -64,11 +64,11 @@ class QuestionCategory extends BasicEntity implements EntityInterface
     }
 
     /**
-     * @return Collection<int, Question>
+     * @return Question[]
      */
-    public function getQuestions(): Collection
+    public function getQuestions(): array
     {
-        return $this->questions;
+        return $this->questions->toArray();
     }
 
     public function addQuestion(Question $question): self
@@ -95,9 +95,15 @@ class QuestionCategory extends BasicEntity implements EntityInterface
 
     public function toResource(): ResourceInterface
     {
+        $questions = [];
+        foreach ($this->getQuestions() as $question) {
+            $questions[] = $question->toExtendedResource();
+        }
+
         return new QuestionCategoryResource(
             $this->id,
             $this->title,
+            $questions,
         );
     }
 }

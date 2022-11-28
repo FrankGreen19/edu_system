@@ -25,9 +25,9 @@ class QuestionCategoryModule extends BasicModule
 
 
     /**
-     * @return EntityInterface[]
+     * @return QuestionCategory[]|null
      */
-    public function getCategories($author): array
+    public function getCategories($author): ?array
     {
         return $this->questionCategoryRepository->findBy(['author' => $author]);
     }
