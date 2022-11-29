@@ -24,7 +24,7 @@ class QuestionCategory extends BasicEntity implements EntityInterface
     #[ORM\ManyToOne(inversedBy: 'authoredQuestionCategories')]
     private ?user $author = null;
 
-    #[ORM\OneToMany(mappedBy: 'questionCategory', targetEntity: Question::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'questionCategory', targetEntity: Question::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $questions;
 
     const AUTHORLESS = null;
