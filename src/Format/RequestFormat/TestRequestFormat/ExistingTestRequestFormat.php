@@ -11,7 +11,7 @@ class ExistingTestRequestFormat extends NewTestRequestFormat
     #[NotNull]
     public int $id;
 
-    public function __construct(int $id, ?string $title, ?int $questionsNumber,
+    public function __construct(?int $id, ?string $title, ?int $questionsNumber,
                                 ?string $finishDate, ?int $executionTime, ?int $testTypeId,
                                 ?array $questions, ?int $questionCategoryId)
     {

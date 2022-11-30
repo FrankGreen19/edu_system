@@ -14,7 +14,7 @@ class NewQuestionCategory
     #[NotBlank]
     public ?array $questions;
 
-    public function __construct(string $title, ?array $questions)
+    public function __construct(?string $title, ?array $questions)
     {
         $this->title = $title;
         $this->questions = $questions;
