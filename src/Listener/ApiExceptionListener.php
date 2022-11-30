@@ -34,7 +34,7 @@ class ApiExceptionListener
         }
 
         $message = $exception->isHidden() ? Response::$statusTexts[$exception->getCode()] : $throwable->getMessage();
-        $responseBody = $this->serializer->serialize(new ErrorResponseFormat($message), JsonEncoder::FORMAT);
+        $responseBody = $this->serializer->serialize(['violations' => new ErrorResponseFormat($message)], JsonEncoder::FORMAT);
         $response = new JsonResponse($responseBody, $exception->getCode(), [], true);
 
         $event->setResponse($response);
